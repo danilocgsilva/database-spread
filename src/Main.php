@@ -27,8 +27,6 @@ class Main
             }
         } catch (PDOException $pe) {
             throw new Exception("Possibily a connection error.");
-        } catch (Exception $e) {
-            throw new Exception("Error unhandleable.");
         }
     }
 }
