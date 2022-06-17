@@ -19,6 +19,11 @@ class Table
         return $this->name;
     }
 
+    public function getSize(): int
+    {
+        return 0;
+    }
+
     public function __toString()
     {
         return $this->name;
