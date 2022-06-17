@@ -23,7 +23,7 @@ class Main
         try {
             $resource = $this->pdo->query("SHOW TABLES");
             foreach ($resource->fetchAll(PDO::FETCH_NUM) as $row) {
-                yield $row[0];
+                yield (new Table())->setName($row[0]);
             }
         } catch (PDOException $pe) {
             throw new Exception("Possibily a connection error.");
