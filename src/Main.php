@@ -11,24 +11,33 @@ use PDOException;
 
 class Main
 {
-    private PDO $pdo;
-    
-    public function __construct(PDO $pdo)
-    {
-        $this->pdo = $pdo;
+    private DatabaseSpread $databaseSpread;
+
+    public function __construct(
+        private PDO $pdo
+    ) {
+        $this->databaseSpread = new DatabaseSpread($pdo);
     }
     
     public function getTables(): Generator
     {
         try {
-            $resource = $this->pdo->query("SHOW TABLES");
-            foreach ($resource->fetchAll(PDO::FETCH_NUM) as $row) {
-                yield $row[0];
+            foreach ($this->databaseSpread->getTables() as $table) {
+                yield $table;
             }
         } catch (PDOException $pe) {
             throw new Exception("Possibily a connection error.");
-        } catch (Exception $e) {
-            throw new Exception("Error unhandleable.");
+        }
+    }
+
+    public function getTablesWithSizes(): Generator
+    {
+        try {
+            foreach ($this->databaseSpread->getTablesWithSizes() as $table) {
+                yield $table;
+            }
+        } catch (PDOException $pe) {
+            throw new Exception("Possibily a connection error.");
         }
     }
 }
