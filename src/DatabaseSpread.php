@@ -25,7 +25,7 @@ class DatabaseSpread
     {
         $resource = $this->pdo->query("SHOW TABLES");
         foreach ($resource->fetchAll(PDO::FETCH_NUM) as $row) {
-            yield $row[0];
+            yield (new Table())->setName($row[0]);
         }
     }
 }
