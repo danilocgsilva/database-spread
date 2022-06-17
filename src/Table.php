@@ -14,6 +14,11 @@ class Table
         return $this;
     }
 
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
     public function __toString()
     {
         return $this->name;
