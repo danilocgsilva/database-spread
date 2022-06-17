@@ -22,9 +22,8 @@ class Main
     public function getTables(): Generator
     {
         try {
-            foreach ($this->databaseSpread->getTables() as $table) {
-                yield $table;
-            }
+            yield from $this->databaseSpread->getTables();
+
         } catch (PDOException $pe) {
             throw new Exception("Possibily a connection error.");
         }
@@ -33,9 +32,7 @@ class Main
     public function getTablesWithSizes(): Generator
     {
         try {
-            foreach ($this->databaseSpread->getTablesWithSizes() as $table) {
-                yield $table;
-            }
+            yield from $this->databaseSpread->getTablesWithSizes();
         } catch (PDOException $pe) {
             throw new Exception("Possibily a connection error.");
         }
