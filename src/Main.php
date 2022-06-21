@@ -13,18 +13,26 @@ class Main
 {
     private DatabaseSpread $databaseSpread;
 
+    private string $databaseName;
+
     public function __construct(
         private PDO $pdo
     ) {
         $this->databaseSpread = new DatabaseSpread($pdo);
+    }
+
+    public function setDatabaseName(string $databaseName): self
+    {
+        $this->pdo->query("USE %s;", $databaseName);
+        $this->databaseName = $databaseName;
+        return $this;
     }
     
     public function getTables(): Generator
     {
         try {
             yield from $this->databaseSpread->getTables();
-
-        } catch (Exception $pe) {
+        } catch (PDOException $pe) {
             throw new Exception("Possibily a connection error.");
         }
     }
@@ -33,7 +41,7 @@ class Main
     {
         try {
             yield from $this->databaseSpread->getTablesWithSizes();
-        } catch (Exception $pe) {
+        } catch (PDOException $pe) {
             throw new Exception("Possibily a connection error.");
         }
     }
