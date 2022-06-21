@@ -49,9 +49,8 @@ class DatabaseSpread
 
     public function getFields(string $table): Generator
     {
-        $fieldsQueryBase = "DESCRIBE :table";
-        $resource = $this->pdo->prepare($fieldsQueryBase, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-        $resource->execute([":table" => $table]);
+        $fieldsQuery = sprintf("DESCRIBE :%s", $table);
+        $resource = $this->pdo->query($fieldsQuery);
         foreach ($resource->fetchAll(PDO::FETCH_CLASS, Field::class) as $field) {
             yield $field;
         }
