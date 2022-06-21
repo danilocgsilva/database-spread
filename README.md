@@ -18,7 +18,14 @@ $databaseSpread = Danilocgsilva\DatabaseSpread($pdo);
 
 ### Using the object
 
+Listing tables:
 ```
 $databaseSpread->getTables()
 ```
-The `getTables()` returns a `Transversable` object.
+
+Listing tables with sizes:
+```
+$databaseSpread->getTablesWithSizes()
+```
+
+The `getTables()` and `getTablesWithSizes()` returns a `Transversable` object.
