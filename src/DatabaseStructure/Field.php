@@ -6,7 +6,7 @@ namespace Danilocgsilva\DatabaseSpread\DatabaseStructure;
 
 class Field
 {
-    private string $Name;
+    private string $Field;
 
     private string $Type;
 
@@ -14,13 +14,13 @@ class Field
 
     private string $Key;
 
-    private string $Default;
+    private ?string $Default;
 
     private string $Extra;
 
     public function getName(): string
     {
-        return $this->Name;
+        return $this->Field;
     }
 
     public function getType(): string
@@ -28,7 +28,7 @@ class Field
         return $this->Type;
     }
 
-    public function getNull(): string
+    public function getNull(): ?string
     {
         return $this->Null;
     }
