@@ -31,7 +31,7 @@ class Main
     {
         try {
             yield from $this->databaseSpread->getTables();
-        } catch (PDOException $pe) {
+        } catch (PDOException) {
             throw new Exception("Possibily a connection error.");
         }
     }
@@ -40,7 +40,16 @@ class Main
     {
         try {
             yield from $this->databaseSpread->getTablesWithSizes();
-        } catch (PDOException $pe) {
+        } catch (PDOException) {
+            throw new Exception("Possibily a connection error.");
+        }
+    }
+
+    public function getFields(string $table): Generator
+    {
+        try {
+            yield from $this->databaseSpread->getFields($table);
+        } catch (PDOException) {
             throw new Exception("Possibily a connection error.");
         }
     }
