@@ -38,8 +38,9 @@ class DatabaseSpread
 
     public function getTablesWithSizes(): Generator
     {
-        $queryWithSizes = sprintf("SELECT TABLE_NAME as name, DATA_LENGTH + INDEX_LENGTH as size FROM information_schema.tables WHERE table_schema = %s", $this->databaseName);
-        $resource = $this->pdo->query($queryWithSizes);
+        $queryWithSizesBase = "SELECT TABLE_NAME as name, DATA_LENGTH + INDEX_LENGTH as size FROM information_schema.tables WHERE table_schema = :table_schema";
+        // $resource = $this->pdo->query($queryWithSizes);
+        $resource = $this->pdo->prepare($queryWithSizesBase, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
         foreach ($resource->fetchAll(PDO::FETCH_CLASS, Table::class) as $table) {
             yield $table;
         }
