@@ -49,7 +49,7 @@ class DatabaseSpread implements MethodsInterface
 
     public function getFields(string $table): Generator
     {
-        $fieldsQuery = sprintf("DESCRIBE :%s", $table);
+        $fieldsQuery = sprintf("DESCRIBE %s", $table);
         $resource = $this->pdo->query($fieldsQuery);
         foreach ($resource->fetchAll(PDO::FETCH_CLASS, Field::class) as $field) {
             yield $field;
