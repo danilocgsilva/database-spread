@@ -6,45 +6,45 @@ namespace Danilocgsilva\DatabaseSpread\DatabaseStructure;
 
 class Field
 {
-    private string $name;
+    private string $Name;
 
-    private string $type;
+    private string $Type;
 
-    private string $null;
+    private string $Null;
 
-    private string $key;
+    private string $Key;
 
-    private string $default;
+    private string $Default;
 
-    private string $extra;
+    private string $Extra;
 
     public function getName(): string
     {
-        return $this->name;
+        return $this->Name;
     }
 
     public function getType(): string
     {
-        return $this->type;
+        return $this->Type;
     }
 
     public function getNull(): string
     {
-        return $this->null;
+        return $this->Null;
     }
 
     public function getKey(): string
     {
-        return $this->key;
+        return $this->Key;
     }
 
     public function getDefault(): string
     {
-        return $this->default;
+        return $this->Default;
     }
 
     public function getExtra(): string
     {
-        return $this->extra;
+        return $this->Extra;
     }
 }
