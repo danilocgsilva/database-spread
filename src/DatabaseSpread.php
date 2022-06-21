@@ -8,8 +8,7 @@ use PDO;
 use Generator;
 use PDOException;
 use Exception;
-use DatabaseStructure\Table;
-use DatabaseStructure\Field;
+use Danilocgsilva\DatabaseSpread\DatabaseStructure\{Table, Field};
 
 class DatabaseSpread
 {
