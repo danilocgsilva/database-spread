@@ -8,6 +8,8 @@ use PDO;
 use Generator;
 use PDOException;
 use Exception;
+use DatabaseStructure\Table;
+use DatabaseStructure\Field;
 
 class DatabaseSpread
 {
@@ -43,6 +45,16 @@ class DatabaseSpread
         $resource->execute([":table_schema" => $this->databaseName]);
         foreach ($resource->fetchAll(PDO::FETCH_CLASS, Table::class) as $table) {
             yield $table;
+        }
+    }
+
+    public function getFields(string $table): Generator
+    {
+        $fieldsQueryBase = "DESCRIBE :table";
+        $resource = $this->pdo->prepare($fieldsQueryBase, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+        $resource->execute([":table" => $table]);
+        foreach ($resource->fetchAll(PDO::FETCH_CLASS, Field::class) as $field) {
+            yield $field;
         }
     }
 }

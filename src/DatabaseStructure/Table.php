@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Danilocgsilva\DatabaseSpread;
+namespace Danilocgsilva\DatabaseSpread\DatabaseStructure;
 
 class Table
 {

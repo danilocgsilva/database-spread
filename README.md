@@ -14,6 +14,7 @@ Utility to check relational database structure, relationships and complexity
 ```
 $pdo = new \PDO($connection, $user, $password);
 $databaseSpread = Danilocgsilva\DatabaseSpread($pdo);
+$databaseSpread->setDatabaseName("DATABASE_name");
 ```
 
 ### Using the object
