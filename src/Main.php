@@ -9,7 +9,7 @@ use PDO;
 use Exception;
 use PDOException;
 
-class Main
+class Main implements MethodsInterface
 {
     private DatabaseSpread $databaseSpread;
 

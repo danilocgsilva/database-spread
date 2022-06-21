@@ -10,7 +10,7 @@ use PDOException;
 use Exception;
 use Danilocgsilva\DatabaseSpread\DatabaseStructure\{Table, Field};
 
-class DatabaseSpread
+class DatabaseSpread implements MethodsInterface
 {
     private string $databaseName;
     
