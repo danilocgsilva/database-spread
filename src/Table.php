@@ -23,7 +23,7 @@ class Table
 
     public function getSize(): int
     {
-        return 0;
+        return $this->size;
     }
 
     public function __toString()
