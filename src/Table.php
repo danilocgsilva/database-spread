@@ -7,6 +7,8 @@ namespace Danilocgsilva\DatabaseSpread;
 class Table
 {
     private string $name;
+
+    private int $size;
     
     public function setName(string $name): self
     {

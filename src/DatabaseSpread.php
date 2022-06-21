@@ -23,9 +23,10 @@ class DatabaseSpread
 
     public function getTablesWithSizes(): Generator
     {
-        $resource = $this->pdo->query("SHOW TABLES");
-        foreach ($resource->fetchAll(PDO::FETCH_NUM) as $row) {
-            yield (new Table())->setName($row[0]);
+        $queryWithSizes = sprintf("SELECT TABLE_NAME as name, DATA_LENGTH + INDEX_LENGTH as size FROM information_schema.tables WHERE table_schema = %s", );
+        $resource = $this->pdo->query($queryWithSizes);
+        foreach ($resource->fetchAll(PDO::FETCH_CLASS, Table::class) as $table) {
+            yield $table;
         }
     }
 }
