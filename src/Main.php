@@ -23,13 +23,7 @@ class Main
 
     public function setDatabaseName(string $databaseName): self
     {
-        try {
-            $this->pdo->query(sprintf("USE %s;", $databaseName));
-        } catch (PDOException) {
-            print("Possibli a connection error");
-            exit();
-        }
-        $this->databaseName = $databaseName;
+        $this->databaseSpread->setDatabaseName($databaseName);
         return $this;
     }
     

@@ -6,12 +6,27 @@ namespace Danilocgsilva\DatabaseSpread;
 
 use PDO;
 use Generator;
+use PDOException;
+use Exception;
 
 class DatabaseSpread
 {
+    private string $databaseName;
+    
     public function __construct(
         private PDO $pdo
     ) {}
+
+    public function setDatabaseName(string $databaseName): self
+    {
+        try {
+            $this->pdo->query(sprintf("USE %s", $databaseName));
+        } catch (PDOException) {
+            throw new Exception("Possibli a connection aerror.");
+        }
+        $this->databaseName = $databaseName;
+        return $this;
+    }
 
     public function getTables(): Generator
     {
