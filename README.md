@@ -29,4 +29,10 @@ Listing tables with sizes:
 $databaseSpread->getTablesWithSizes()
 ```
 
-The `getTables()` and `getTablesWithSizes()` returns a `Transversable` object.
+Get all fields from a table:
+
+```
+$databaseSpread->getFields(string $tableName)
+```
+
+The `getTables()`, `getTablesWithSizes()` and `getFields()` returns a `Transversable` object.
