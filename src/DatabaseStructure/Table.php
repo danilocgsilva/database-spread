@@ -9,6 +9,8 @@ class Table
     private string $name;
 
     private int $size;
+
+    private int $height;
     
     public function setName(string $name): self
     {
@@ -24,6 +26,17 @@ class Table
     public function getSize(): int
     {
         return $this->size;
+    }
+
+    public function setHeight(int $height): self
+    {
+        $this->height = $height;
+        return $this;
+    }
+
+    public function getHeight(): int
+    {
+        return $this->height;
     }
 
     public function __toString()

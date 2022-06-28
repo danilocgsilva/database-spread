@@ -55,4 +55,22 @@ class DatabaseSpread implements MethodsInterface
             yield $field;
         }
     }
+
+    public function getTablesWithHeights(): Generator
+    {
+        foreach ($this->getTables() as $table) {
+            $this->hydrateHeight($table);
+            yield $table;
+        }
+    }
+
+    private function hydrateHeight(Table $table): void
+    {
+        $query = "SELECT COUNT(*) as height FROM $table;";
+        $resource = $this->pdo->prepare($query);
+        $resource->execute();
+        $table->setHeight(
+            ($resource->fetch())["height"]
+        );
+    }
 }

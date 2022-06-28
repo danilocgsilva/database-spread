@@ -14,5 +14,7 @@ interface MethodsInterface
 
     public function getTablesWithSizes(): Generator;
 
+    public function getTablesWithHeights(): Generator;
+
     public function getFields(string $table): Generator;
 }

@@ -53,4 +53,13 @@ class Main implements MethodsInterface
             throw new Exception("Possibily a connection error.");
         }
     }
+
+    public function getTablesWithHeights(): Generator
+    {
+        try {
+            yield from $this->databaseSpread->getTablesWithHeights();
+        } catch (PDOException) {
+            throw new Exception("Possibily a connection error.");
+        }
+    }
 }
