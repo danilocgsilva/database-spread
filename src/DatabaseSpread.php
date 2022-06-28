@@ -70,7 +70,7 @@ class DatabaseSpread implements MethodsInterface
         $resource = $this->pdo->prepare($query);
         $resource->execute();
         $table->setHeight(
-            ($resource->fetch())["height"]
+            (int) ($resource->fetch())["height"]
         );
     }
 }
