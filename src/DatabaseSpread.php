@@ -58,8 +58,18 @@ class DatabaseSpread implements MethodsInterface
 
     public function getTablesWithHeights(): Generator
     {
-        foreach ($this->getTables() as $table) {
+        foreach ($this->getTablesNotViews() as $table) {
             $this->hydrateHeight($table);
+            yield $table;
+        }
+    }
+
+    private function getTablesNotViews(): Generator
+    {
+        $queryWithSizesBase = "SELECT TABLE_NAME FROM information_schema.tables WHERE table_schema = :table_schema AND table_type = :base_table";
+        $resource = $this->pdo->prepare($queryWithSizesBase, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+        $resource->execute([":table_schema" => $this->databaseName, ":base_table" => "BASE TABLE"]);
+        foreach ($resource->fetchAll(PDO::FETCH_CLASS, Table::class) as $table) {
             yield $table;
         }
     }
