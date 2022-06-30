@@ -29,7 +29,7 @@ class Main implements MethodsInterface
 
     public function getDatabaseName(): string
     {
-        return $this->databaseName;
+        return $this->databaseSpread->getDatabaseName();
     }
     
     public function getTables(): Generator
