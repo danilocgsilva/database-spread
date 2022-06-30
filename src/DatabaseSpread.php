@@ -29,7 +29,7 @@ class DatabaseSpread implements MethodsInterface
         return $this;
     }
 
-    public function getDatabaseName(string $databaseName): string
+    public function getDatabaseName(): string
     {
         return $this->databaseName;
     }
