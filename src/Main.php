@@ -26,6 +26,11 @@ class Main implements MethodsInterface
         $this->databaseSpread->setDatabaseName($databaseName);
         return $this;
     }
+
+    public function getDatabaseName(): string
+    {
+        return $this->databaseName;
+    }
     
     public function getTables(): Generator
     {

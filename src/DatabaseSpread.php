@@ -29,11 +29,6 @@ class DatabaseSpread implements MethodsInterface
         return $this;
     }
 
-    public function getDatabaseName(): string
-    {
-        return $this->databaseName;
-    }
-
     public function getTables(): Generator
     {
         $resource = $this->pdo->query("SHOW TABLES");
