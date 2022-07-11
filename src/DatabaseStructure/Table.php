@@ -55,7 +55,7 @@ class Table
 
     public function unsetIsView(): self
     {
-        return $this->isView = false;
+        $this->isView = false;
         return $this;
     }
 
