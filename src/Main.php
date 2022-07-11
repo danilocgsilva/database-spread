@@ -8,6 +8,7 @@ use Generator;
 use PDO;
 use Exception;
 use PDOException;
+use Danilocgsilva\DatabaseSpread\DatabaseStructure\Table;
 
 class Main implements MethodsInterface
 {
@@ -66,5 +67,21 @@ class Main implements MethodsInterface
         } catch (PDOException) {
             throw new Exception("Possibily a connection error.");
         }
+    }
+
+    /**
+     * Fills the table size property.
+     */
+    public function hydrateSize(Table $table): void
+    {
+        $this->databaseSpread->hydrateSize($table);
+    }
+
+    /**
+     * Fills the table height property.
+     */
+    public function hydrateHeight(Table $table): void
+    {
+        $this->databaseSpread->hydrateHeight($table);
     }
 }
