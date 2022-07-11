@@ -14,11 +14,25 @@ Utility to check relational database structure, relationships and complexity
 ```
 $pdo = new \PDO($connection, $user, $password);
 $databaseSpread = Danilocgsilva\DatabaseSpread($pdo);
+$databaseSpread->setDatabaseName("DATABASE_name");
 ```
 
 ### Using the object
 
+Listing tables:
 ```
 $databaseSpread->getTables()
 ```
-The `getTables()` returns a `Transversable` object.
+
+Listing tables with sizes:
+```
+$databaseSpread->getTablesWithSizes()
+```
+
+Get all fields from a table:
+
+```
+$databaseSpread->getFields(string $tableName)
+```
+
+The `getTables()`, `getTablesWithSizes()` and `getFields()` returns a `Transversable` object.

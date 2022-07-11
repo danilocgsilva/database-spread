@@ -9,23 +9,61 @@ use PDO;
 use Exception;
 use PDOException;
 
-class Main
+class Main implements MethodsInterface
 {
-    private PDO $pdo;
-    
-    public function __construct(PDO $pdo)
+    private DatabaseSpread $databaseSpread;
+
+    private string $databaseName;
+
+    public function __construct(
+        private PDO $pdo
+    ) {
+        $this->databaseSpread = new DatabaseSpread($pdo);
+    }
+
+    public function setDatabaseName(string $databaseName): self
     {
-        $this->pdo = $pdo;
+        $this->databaseSpread->setDatabaseName($databaseName);
+        return $this;
+    }
+
+    public function getDatabaseName(): string
+    {
+        return $this->databaseSpread->getDatabaseName();
     }
     
     public function getTables(): Generator
     {
         try {
-            $resource = $this->pdo->query("SHOW TABLES");
-            foreach ($resource->fetchAll(PDO::FETCH_NUM) as $row) {
-                yield (new Table())->setName($row[0]);
-            }
-        } catch (PDOException $pe) {
+            yield from $this->databaseSpread->getTables();
+        } catch (PDOException) {
+            throw new Exception("Possibily a connection error.");
+        }
+    }
+
+    public function getTablesWithSizes(): Generator
+    {
+        try {
+            yield from $this->databaseSpread->getTablesWithSizes();
+        } catch (PDOException) {
+            throw new Exception("Possibily a connection error.");
+        }
+    }
+
+    public function getFields(string $table): Generator
+    {
+        try {
+            yield from $this->databaseSpread->getFields($table);
+        } catch (PDOException) {
+            throw new Exception("Possibily a connection error.");
+        }
+    }
+
+    public function getTablesWithHeights(): Generator
+    {
+        try {
+            yield from $this->databaseSpread->getTablesWithHeights();
+        } catch (PDOException) {
             throw new Exception("Possibily a connection error.");
         }
     }
