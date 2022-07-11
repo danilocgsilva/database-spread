@@ -44,9 +44,18 @@ class DatabaseSpread implements MethodsInterface
      */
     public function getTables(): Generator
     {
-        $resource = $this->pdo->query("SHOW TABLES");
+        // $resource = $this->pdo->query("SHOW TABLES");
+        $query = "SELECT TABLE_NAME as name, TABLE_TYPE as table_type FROM information_schema.tables "
+            . "WHERE table_schema = :table_schema";
+        $resource = $this->pdo->query($query);
         foreach ($resource->fetchAll(PDO::FETCH_NUM) as $row) {
-            yield (new Table())->setName($row[0]);
+            $table = (new Table())->setName($row[0]);
+            if ($row[0] === "BASE TABLE") {
+                $table->unsetIsView();
+            } else {
+                $table->setIsView();
+            }
+            yield $table;
         }
     }
 
@@ -100,6 +109,15 @@ class DatabaseSpread implements MethodsInterface
 
     public function hydrateSize(Table $table): void
     {
+        $tableIsView = $table->getIsView();
+        if ($tableIsView === null) {
+            throw new Exception("Please, hydrate the table to ensure its type.");
+        }
+        
+        if ($tableIsView) {
+            return;
+        }
+        
         $queryGetTableSize = "SELECT TABLE_NAME as name, DATA_LENGTH + INDEX_LENGTH as size FROM information_schema.tables "
             . "WHERE table_schema = :table_schema AND TABLE_NAME = :table_name";
         $resource = $this->pdo->prepare($queryGetTableSize, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);

@@ -8,9 +8,11 @@ class Table
 {
     private string $name;
 
-    private int $size;
+    private ?int $size;
 
     private int $height;
+
+    private bool $isView;
     
     public function setName(string $name): self
     {
@@ -23,7 +25,7 @@ class Table
         return $this->name;
     }
 
-    public function getSize(): int
+    public function getSize(): ?int
     {
         return $this->size;
     }
@@ -43,6 +45,23 @@ class Table
     {
         $this->size = $size;
         return $this;
+    }
+
+    public function setIsView(): self
+    {
+        $this->isView = true;
+        return $this;
+    }
+
+    public function unsetIsView(): self
+    {
+        return $this->isView = false;
+        return $this;
+    }
+
+    public function getIsView(): bool
+    {
+        return $this->isView;
     }
 
     public function __toString()
