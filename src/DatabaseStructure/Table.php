@@ -39,6 +39,12 @@ class Table
         return $this->height;
     }
 
+    public function setSize(int $size): self
+    {
+        $this->size = $size;
+        return $this;
+    }
+
     public function __toString()
     {
         return $this->name;
