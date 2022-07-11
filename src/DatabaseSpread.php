@@ -44,13 +44,13 @@ class DatabaseSpread implements MethodsInterface
      */
     public function getTables(): Generator
     {
-        // $resource = $this->pdo->query("SHOW TABLES");
         $query = "SELECT TABLE_NAME as name, TABLE_TYPE as table_type FROM information_schema.tables "
-            . "WHERE table_schema = :table_schema";
-        $resource = $this->pdo->query($query);
+            . "WHERE table_schema = :table_schema;";
+        $resource = $this->pdo->prepare($query, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+        $resource->execute([":table_schema" => $this->databaseName]);
         foreach ($resource->fetchAll(PDO::FETCH_NUM) as $row) {
             $table = (new Table())->setName($row[0]);
-            if ($row[0] === "BASE TABLE") {
+            if ($row[1] === "BASE TABLE") {
                 $table->unsetIsView();
             } else {
                 $table->setIsView();
