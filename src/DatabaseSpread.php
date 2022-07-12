@@ -118,7 +118,8 @@ class DatabaseSpread implements MethodsInterface
             return;
         }
         
-        $queryGetTableSize = "SELECT TABLE_NAME as name, DATA_LENGTH + INDEX_LENGTH as size FROM information_schema.tables "
+        $queryGetTableSize = "SELECT "
+            . "TABLE_NAME as name, DATA_LENGTH + INDEX_LENGTH as size FROM information_schema.tables "
             . "WHERE table_schema = :table_schema AND TABLE_NAME = :table_name";
         $resource = $this->pdo->prepare($queryGetTableSize, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
         $resource->execute([":table_schema" => $this->databaseName, ":table_name" => $table->getName()]);
