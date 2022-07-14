@@ -107,15 +107,10 @@ class DatabaseSpread implements MethodsInterface
         );
     }
 
-    public function hydrateSize(Table $table): void
+    public function hydrateSize(Table $table): bool
     {
-        $tableIsView = $table->getIsView();
-        if ($tableIsView === null) {
-            throw new Exception("Please, hydrate the table to ensure its type.");
-        }
-        
-        if ($tableIsView) {
-            return;
+        if ($table->getIsView()) {
+            return false;
         }
         
         $queryGetTableSize = "SELECT "
@@ -126,6 +121,27 @@ class DatabaseSpread implements MethodsInterface
         $table->setSize(
             (int) ($resource->fetch())["size"]
         );
+        return true;
+    }
+
+    public function hydrateIsView(Table $table)
+    {
+        $queryTableType = "SELECT TABLE_TYPE as table_type"
+            . "FROM information_schema.tables "
+            . "WHERE TABLE_SCHEMA = :database_name AND TABLE_NAME = :table_name;";
+        $resource = $this->pdo->prepare($queryTableType,  [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
+        $resource->execute([
+            ':database_name' => $this->databaseName,
+            ':table_name' => $table->getName()
+        ]);
+
+        $tableType = ($resource->fetch())["table_type"];
+
+        match ($tableType) {
+            "BASE TABLE" => $table->unsetIsView(),
+            "VIEW" => $table->setIsView(),
+            default => throw new Exception("The table is from an unknown type.")
+        };
     }
 
     /**
