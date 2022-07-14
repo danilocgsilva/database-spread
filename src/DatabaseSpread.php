@@ -144,6 +144,11 @@ class DatabaseSpread implements MethodsInterface
         };
     }
 
+    public function getPdo(): PDO
+    {
+        return $this->pdo;
+    }
+
     /**
      * Filters only tables, excluding views. Yields
      *   Danilocgsilva\DatabaseSpread\DatabaseStructure\Table with its name

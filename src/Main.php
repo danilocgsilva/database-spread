@@ -67,4 +67,9 @@ class Main implements MethodsInterface
             throw new Exception("Possibily a connection error.");
         }
     }
+
+    public function getPdo(): PDO
+    {
+        return $this->databaseSpread->getPdo();
+    }
 }
