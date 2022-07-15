@@ -23,7 +23,7 @@ class DatabaseSpread implements MethodsInterface
         try {
             $this->pdo->query(sprintf("USE %s", $databaseName));
         } catch (PDOException) {
-            throw new Exception("Possibli a connection aerror.");
+            throw new Exception("Possibly a connection error.");
         }
         $this->databaseName = $databaseName;
         return $this;
@@ -124,9 +124,9 @@ class DatabaseSpread implements MethodsInterface
         return true;
     }
 
-    public function hydrateIsView(Table $table)
+    public function hydrateIsView(Table $table): void
     {
-        $queryTableType = "SELECT TABLE_TYPE as table_type"
+        $queryTableType = "SELECT TABLE_TYPE as table_type "
             . "FROM information_schema.tables "
             . "WHERE TABLE_SCHEMA = :database_name AND TABLE_NAME = :table_name;";
         $resource = $this->pdo->prepare($queryTableType,  [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
