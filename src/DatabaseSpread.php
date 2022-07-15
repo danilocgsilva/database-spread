@@ -107,6 +107,13 @@ class DatabaseSpread implements MethodsInterface
         );
     }
 
+    /**
+     * Get the table size from database.
+     * Required if the table object exists, but have no this information.
+     * Warnning: This method perform a database select operation.
+     * A view is not eligible for size calculation. The return value
+     *   will be false if a view is provided.
+     */
     public function hydrateSize(Table $table): bool
     {
         if ($table->getIsView()) {
@@ -124,6 +131,9 @@ class DatabaseSpread implements MethodsInterface
         return true;
     }
 
+    /**
+     * Fills the information in table, saying that it is a view or not.
+     */
     public function hydrateIsView(Table $table): void
     {
         $queryTableType = "SELECT TABLE_TYPE as table_type "
@@ -144,6 +154,11 @@ class DatabaseSpread implements MethodsInterface
         };
     }
 
+    /**
+     * Can give the pdo used for database operations. Thus, providing a way
+     *   in the lower level layer use other objects that may deal with the
+     *   database using the same pdo from DatabaseSpread.
+     */
     public function getPdo(): PDO
     {
         return $this->pdo;
